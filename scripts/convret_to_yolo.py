@@ -4,8 +4,9 @@ from tqdm import tqdm
 
 # Define paths
 xls_file = "/home/yukta/devel/wip/AIML/ultrasound-analysis/data/annotations/ObjectDetection.xlsx"
-image_dir = "/home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus/Set1-Training&Validation Sets CNN"
-output_label_dir = "/home/yukta/devel/wip/AIML/ultrasound-analysis/data/labels"
+image_dir = "/home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus/Set1-Training&Validation Sets CNN/Standard"
+
+output_label_dir = "/home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus/Set1-Training&Validation Set CNN/labels"
 
 # Ensure output directory exists
 os.makedirs(output_label_dir, exist_ok=True)
@@ -20,15 +21,20 @@ class_map = {name: i for i, name in enumerate(class_names)}
 
 # Iterate over annotations
 for _, row in tqdm(df.iterrows(), total=len(df), desc="Converting Annotations"):
-    fname = row["fname"]
+    fname = row["fname"].strip()  # Remove extra spaces
     structure = row["structure"]
     h_min, w_min, h_max, w_max = row["h_min"], row["w_min"], row["h_max"], row["w_max"]
 
-    # Construct image path
-    image_path = os.path.join(image_dir, fname)
+    # Try to find the correct image file
+    possible_files = [fname, fname.replace(".png", ".PNG"), fname.replace(".PNG", ".png")]
+    image_path = None
+    for pf in possible_files:
+        temp_path = os.path.join(image_dir, pf)
+        if os.path.exists(temp_path):
+            image_path = temp_path
+            break
 
-    # Check if image exists
-    if not os.path.exists(image_path):
+    if image_path is None:
         print(f"⚠️ Warning: Image {fname} not found in {image_dir}. Skipping...")
         continue  # Skip missing images
 
@@ -38,8 +44,10 @@ for _, row in tqdm(df.iterrows(), total=len(df), desc="Converting Annotations"):
         print(f"⚠️ Warning: Class {structure} not found in class map! Skipping...")
         continue
 
-    # Placeholder image dimensions (update if needed)
-    img_width, img_height = 640, 480  
+    # Get actual image dimensions
+    import cv2
+    img = cv2.imread(image_path)
+    img_height, img_width = img.shape[:2]  # Get correct dimensions
 
     # Convert to YOLO format
     x_center = (w_min + w_max) / 2 / img_width
@@ -55,3 +63,5 @@ for _, row in tqdm(df.iterrows(), total=len(df), desc="Converting Annotations"):
         f.write(f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n")
 
 print("✅ Annotation conversion completed successfully!")
+
+

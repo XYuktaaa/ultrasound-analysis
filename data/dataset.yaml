@@ -1,0 +1,14 @@
+path: /home/yukta/devel/wip/AIML/ultrasound-analysis/data
+train: images/train
+val: images/train  # Change to images/val if you have validation data
+
+names:
+  0: thalami
+  1: midbrain
+  2: palate
+  3: fourth_ventricle
+  4: cisterna_magna
+  5: nuchal_translucency
+  6: nasal_tip
+  7: nasal_skin
+  8: nasal_bone
