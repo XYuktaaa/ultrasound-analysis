@@ -1,0 +1,19 @@
+# Base directory for images
+path: /home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus
+
+# Specify the absolute paths for train, val, and test sets
+train: /home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus/Set1-Training&Validation Sets CNN
+val: /home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus/Internal Test Set
+test: /home/yukta/devel/wip/AIML/ultrasound-analysis/data/images/DatasetForFetus/External Test Set
+
+# Define class names based on your annotations
+names:
+  0: thalami
+  1: midbrain
+  2: palate
+  3: fourth_ventricle
+  4: cisterna_magna
+  5: nuchal_translucency
+  6: nasal_tip
+  7: nasal_skin
+  8: nasal_bone
