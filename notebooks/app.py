@@ -88,11 +88,299 @@
 
 #new script trial
 import streamlit as st
+
+st.set_page_config(page_title="Ultrasound Analyzer", layout="centered")
+from streamlit.components.v1 import html
+# Custom CSS and animation HTML
+# st.markdown("""
+#  <div class="ambulance-wrapper">
+#         🚑
+#     </div>
+# <div class="banner">
+#     <strong>🩺 Ultrasound Analyzer | Early Diagnosis. Fast. Accurate.</strong>
+# </div>
+
+# <style>
+
+# /*extra/
+#  /* Gradient background */
+#         body {
+#             background: linear-gradient(135deg, #d1f0ff, #fceff9);
+#             font-family: 'Segoe UI', sans-serif;
+#         }
+
+#         /* Container for report */
+#         .report-card {
+#             background: #ffffffdd;
+#             border-radius: 24px;
+#             padding: 30px;
+#             margin-top: 20px;
+#             box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+#             font-size: 16px;
+#             line-height: 1.6;
+#             animation: fadeIn 1.5s ease-in-out;
+#         }
+
+#         .report-card h2 {
+#             color: #4a90e2;
+#             border-bottom: 2px solid #eee;
+#             padding-bottom: 8px;
+#         }
+
+#         /* Pulse animation for risk status */
+#         .risk-label {
+#             display: inline-block;
+#             padding: 8px 16px;
+#             background: #ff6b6b;
+#             color: white;
+#             font-weight: bold;
+#             border-radius: 10px;
+#             animation: pulse 2s infinite;
+#         }
+
+#         @keyframes fadeIn {
+#             from {opacity: 0;}
+#             to {opacity: 1;}
+#         }
+
+#         @keyframes pulse {
+#             0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.7); }
+#             70% { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
+#             100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
+#         }
+# .ambulance-wrapper {
+#             position: fixed;
+#             bottom: 20px;
+#             left: -100px;
+#             font-size: 40px;
+#             animation: drive 10s linear infinite;
+#             z-index: 999;
+#         }
+
+#         @keyframes drive {
+#             0% { left: -100px; }
+#             50% { left: 50vw; }
+#             100% { left: 110vw; }
+#         }
+
+# .banner {
+#         position: fixed;
+#         top: 0;
+#         width: 100%;
+#         background: #4a90e2;
+#         color: white;
+#         padding: 12px;
+#         text-align: center;
+#         font-size: 18px;
+#         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+#         z-index: 1000;
+#     }
+
+
+             
+# /* Global font and layout */
+# body, html {
+#     font-family: 'Segoe UI', sans-serif;
+#     background: linear-gradient(to right, #e8f0ff, #dce1ff);
+#     color: #333;
+# }
+
+# /* Streamlit main container */
+# .css-18e3th9 {
+#     padding: 2rem;
+# }
+
+# /* Headings */
+# h1, h2, h3 {
+#     font-weight: 700;
+#     color: #334;
+#     text-align: center;
+#     margin-top: 0.5em;
+# }
+
+# /* Stylish card container */
+# .report-card {
+#     background-color: #ffffffdd;
+#     padding: 2rem;
+#     border-radius: 20px;
+#     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+#     margin-bottom: 2rem;
+#     animation: fadeSlideIn 1s ease;
+# }
+
+# /* Stylish upload and report buttons */
+# button, .stButton>button {
+#     background: linear-gradient(to right, #5f72be, #9b23ea);
+#     color: white;
+#     border: none;
+#     padding: 0.6rem 1.2rem;
+#     border-radius: 8px;
+#     transition: 0.3s ease-in-out;
+# }
+
+# button:hover, .stButton>button:hover {
+#     transform: scale(1.05);
+#     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+# }
+
+# /* Animated ambulance */
+# #ambulance {
+#     width: 100px;
+#     position: fixed;
+#     bottom: 20px;
+#     left: -120px;
+#     animation: moveAmbulance 12s linear infinite;
+# }
+
+# /* Animations */
+# @keyframes moveAmbulance {
+#     0% { left: -120px; }
+#     100% { left: 120%; }
+# }
+
+# @keyframes fadeSlideIn {
+#     0% {
+#         opacity: 0;
+#         transform: translateY(30px);
+#     }
+#     100% {
+#         opacity: 1;
+#         transform: translateY(0px);
+#     }
+# }
+# </style>
+# """, unsafe_allow_html=True)
+#
+#
+st.markdown("""
+<style>
+
+/* === BASE SETUP === */
+html, body, [data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    color: #1a1a1a;
+    overflow-x: hidden;
+}
+
+/* === HEADER GRADIENT TEXT === */
+h1, h2, h3 {
+    font-weight: 800;
+    background: -webkit-linear-gradient(45deg, #0052D4, #4364F7, #6FB1FC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    animation: fadeInDown 1.2s ease-out;
+}
+
+/* === FADE IN DOWN === */
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === BUTTON ANIMATION === */
+button[kind="primary"] {
+    background: linear-gradient(to right, #0052D4, #4364F7, #6FB1FC);
+    color: white;
+    border-radius: 12px;
+    padding: 10px 24px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    animation: popIn 0.8s ease;
+}
+button[kind="primary"]:hover {
+    background: linear-gradient(to right, #6FB1FC, #4364F7, #0052D4);
+    transform: scale(1.05);
+}
+
+/* === POP IN === */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* === FILE UPLOADER === */
+section[data-testid="stFileUploader"] {
+    background: #ffffffdd;
+    border: 2px dashed #0052D4;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    animation: slideUp 0.8s ease;
+}
+
+/* === SLIDE UP === */
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === REPORT BOX === */
+.report-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    width: 90%;
+    transition: transform 0.2s ease-in-out;
+    animation: zoomIn 0.8s ease-out;
+}
+.report-card:hover {
+    transform: scale(1.01);
+}
+
+/* === ZOOM IN === */
+@keyframes zoomIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* === AMBULANCE EMOJI (MOVING) === */
+.ambulance-wrapper {
+    position: fixed;
+    bottom: 30px;
+    left: -120px;
+    font-size: 40px;
+    animation: drive 12s linear infinite;
+    z-index: 999;
+}
+
+/* === MOVING AMBULANCE ANIMATION === */
+@keyframes drive {
+    0% { left: -100px; }
+    50% { left: 50vw; }
+    100% { left: 110vw; }
+}
+
+/* === PULSE LIGHT (optional glowing effect) === */
+.glow-pulse {
+    animation: pulse 2s infinite;
+    color: #0052D4;
+}
+
+/* === PULSE KEYFRAMES === */
+@keyframes pulse {
+    0% { text-shadow: 0 0 5px #6FB1FC; }
+    50% { text-shadow: 0 0 20px #4364F7; }
+    100% { text-shadow: 0 0 5px #6FB1FC; }
+}
+</style>
+
+<!-- MOVING AMBULANCE -->
+<div class="ambulance-wrapper">🚑</div>
+""", unsafe_allow_html=True)
+
+
 import os
 from ultralytics import YOLO
 from PIL import Image
 from fpdf import FPDF
 import datetime
+
 
 # Load the YOLOv8 model
 MODEL_PATH = os.path.expanduser("notebooks/runs/detect/train11/weights/best.pt")
@@ -303,7 +591,12 @@ Explanation:
     </div>
 </div>
 """
+st.markdown('<div class="report-card">', unsafe_allow_html=True)
+# detailed_report_html = generate_detailed_report(report_data)
 
+# st.markdown(detailed_report_html, unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 
 # Function to generate a PDF from the image and report
@@ -326,9 +619,10 @@ def generate_pdf(image_path, report_text):
     return pdf_output_path
 
 # Streamlit UI
-st.set_page_config(page_title="Ultrasound Analyzer", layout="centered")
-st.title("\U0001F9E0 Ultrasound Image Analyzer")
-
+#st.set_page_config(page_title="Ultrasound Analyzer", layout="centered")
+#st.title("\U0001F9E0 Ultrasound Image Analyzer")
+st.title("Fetal Ultrasound Analyzer")
+st.write("Upload a fetal ultrasound image and get diagnostic insights.")
 uploaded_file = st.file_uploader("Upload an Ultrasound Image", type=["png", "jpg", "jpeg"])
 
 if uploaded_file:
